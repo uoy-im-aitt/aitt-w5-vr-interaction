@@ -4,7 +4,7 @@ In the lecture, we saw three different approaches to interacting with objects in
 
 You should work in groups around the computers that have the VR headsets attached. When deploying your VR experiences, make sure that another team member ‘spots’ the user to make sure they don’t bump or trip into any furniture of fellow students.
 
-To get started, make a copy of this repository in your personal GitHub account using the ```Use This Template`` button at the top right of this page, then clone that repository onto the machine you're working on. Then open up the Unity project in the repo and load the scene within it. 
+To get started, make a copy of this repository in your personal GitHub account using the ```Use This Template`` button at the top right of this page, then clone that repository onto the machine you're working on. Then open up the Unity project in the repo and load the scene that's in the root directory. 
 
 > **Note** As with last time, if all group members would like a copy of the work at the end of the practical, you can simply push copies the repo up onto everyone's personal accounts at the end of the session (ask if you want help with this).
 
