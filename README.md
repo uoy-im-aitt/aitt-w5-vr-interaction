@@ -71,7 +71,49 @@ thingBeingGrabbed.transform.parent = transform;
 
 Once your implementation is complete, take turns to perform the tests listed at the end of the first task to see how the interaction technique performs. Pay particular attention to what happens to the lever (i.e. constrained object) with this technique.
 
+## Task 4: Throwing Objects
 
+You should notice that the interaction technique, as implemented, doesn’t support throwing objects. This is because the object doesn’t retain its parent’s velocity in the physics engine once it’s been removed as the child of the controller.
 
+To enable the throwing of objects using the technique, you need to record the velocity and angular velocity of the controller at the point where the user releases the trigger and then apply these to the object that you want to throw.  In this task, you should extend your implementation to include this functionality. You may find the code snippet below useful when doing this. It'll be a bit more complicated (only a little) to get this working if you've placed your scripts on the objects your interacting with. Ask me for some help if you can't work it out.
 
+```c#
+using Valve.VR.InteractionSystem; // include at top of script with other imports
 
+Hand h = GetComponent<Hand>();
+Rigidbody toThrow = thingBeingGrabbed.GetComponent<Rigidbody>();
+toThrow.velocity = h.trackedObject.GetVelocity();
+toThrow.angularVelocity = h.trackedObject.GetAngularVelocity();
+```
+Take turns to test out whether this leads to a realistic and usable throwing interaction.
+
+## Task 5: Constrained Manipulations with Spring Joints
+
+The final interaction technique we learned about in the lecture enables interactions with constrained objects like the lever (or drawers, doors etc.). This technique worked by attaching invisible springs between the controller(s) and the object that the user is interacting with. These springs are part of the physics engine, and always try and make themselves as short as possible. The result is an interaction technique where the user can ‘pull’ at a door or leaver or ‘hang’ an object from multiple points.
+
+Unity has the springs needed to implement this interaction built into its physics engine – using the ```SpringJoint``` component. Therefore, you can implement the interaction in Unity by following these steps:
+
+1. Add a ```SpringJoint``` component to each of the Vive Controller objects
+2. Write a script that attaches the ‘other end’ of the spring (which is set via the connectedBody parameter) to the object that you want to manipulate (i.e. one you are in collision with) when the user pulls the trigger
+3. Release the object by setting the ```connectedBody``` parameter to null, when the user releases the trigger
+
+The following code snippet shows how to attach the end of a spring to an object by setting the ```connectedBody``` parameter:
+
+```c#
+// attach other end of a spring component to an object
+SpringJoint joint = GetComponent<SpringJoint>();
+joint.connectedBody = thingBeingGrabbed.GetComponent<Rigidbody>();
+```
+> **Note** The ```Spring``` parameter of the spring joint sets the tension of the spring. You may need to adjust this this to get responsive interaction. Unity will automatically set the position of the spring on the object you are grabbing for you – so you don’t need to worry about doing this.
+
+Once your implementation is complete, take turns to perform the tests listed at the end of the first task to see how the interaction technique performs.
+
+## Optional Extension: A Nice Half-Way House (Building on the Interactable Object)
+
+If you complete all of the above tasks before the end of the practical, or would like to continue to develop your skills in your free study time, then you should consider experimenting with the following task:
+
+In the last four tasks of the practical today, we made our own custom interactions from scratch. You might be wondering though: is it possible to make my own interactions that are compatible with the SteamVR "Interactable" script, thereby giving me all the nice stuff it brings like the hover overlay? The answer is yes and its not that hard.
+
+I personally found that the best way to learn about extending the interaction system like this is to look at the ```InteractableExample.cs``` script that's found in ```SteamVR\InteractionSystem\Samples\Scripts```. 
+
+This script includes a range of event handlers that are called when certain events are detected in the interaction system. To understand this script – and, therefore, how to make your own ones like it – why not complete try to adapt this script so that it plays sounds when the player hovers over different objects in the scene.
