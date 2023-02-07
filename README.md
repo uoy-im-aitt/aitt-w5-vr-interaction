@@ -56,7 +56,7 @@ The code for detecting whether trigger is down for the GrabPinch action is as fo
 
 ```c#
 // check if the trigger is pressed
-SteamVR_Input.GetStateDown(“GrabPinch”, SteamVR_Input_Sources.Any);
+SteamVR_Input.GetStateDown("GrabPinch", SteamVR_Input_Sources.Any);
 ```
 
 In case you've forgotten (its been a while since Media Production for Interactive Environments!) here's the code for making one game the child of another:
